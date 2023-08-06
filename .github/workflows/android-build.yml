@@ -2,6 +2,16 @@
 name: 'Android Build'
 
 on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: release or debug
+        required: true
+        type: string # values: release or debug
+      publish:
+        required: false
+        type: boolean
+        description: Publish to Appcenter
   workflow_call:
     inputs:
       environment:
