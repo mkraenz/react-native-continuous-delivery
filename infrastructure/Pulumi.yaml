@@ -1,0 +1,3 @@
+name: react-native-cicd
+runtime: nodejs
+description: A minimal GitHub TypeScript Pulumi program.
