@@ -1,3 +1,5 @@
+# mostly following https://medium.com/@paramsingh_66174/ci-cd-pipeline-for-react-native-apps-98246237e29d
+
 name: 'Continuous Delivery'
 on:
   push:
@@ -9,3 +11,9 @@ jobs:
     with:
       environment: release
     secrets: inherit
+
+  # build-ios:
+  #   uses: ./.github/workflows/ios-build.yml
+  #   with:
+  #     environment: release
+  #   secrets: inherit

@@ -1,0 +1,81 @@
+name: 'iOS Build'
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+      publish:
+        required: false
+        type: boolean
+        description: Publish to Appcenter
+    secrets:
+      P12_BASE64:
+        required: true
+      MOBILEPROVISION_BASE64:
+        required: true
+      IOS_TEAM_ID:
+        required: true
+      CERTIFICATE_PASSWORD:
+        required: true
+      # NPM_TOKEN:
+      #   required: true
+      # APP_CENTER_TOKEN_IOS:
+      #   required: true
+
+env:
+  APP_NAME: rncicd
+
+jobs:
+  build-ios:
+    runs-on: macos-12 #Monterey
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'yarn'
+
+      - name: Install Node modules
+        run: yarn ci
+
+      - name: Setup Ruby (bundle)
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.6
+          bundler-cache: true
+
+      - name: Restore Pods cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ios/Pods
+            ~/Library/Caches/CocoaPods
+            ~/.cocoapods
+          key: ${{ runner.os }}-pods-${{ hashFiles('ios/Podfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pods-
+      - name: Install pod dependencies
+        run: cd ios && pod install && cd ..
+
+      - name: Build iOS (Release)
+        # https://github.com/yukiarrr/ios-build-action
+        uses: yukiarrr/ios-build-action@v1.11.0
+        with:
+          project-path: ios/${{ inputs.APP_NAME }}.xcodeproj
+          p12-base64: ${{ secrets.P12_BASE64 }}
+          mobileprovision-base64: ${{ secrets.MOBILEPROVISION_BASE64 }}
+          code-signing-identity: 'Apple Distribution'
+          certificate-password: ${{ secrets.CERTIFICATE_PASSWORD }}
+          team-id: ${{ secrets.IOS_TEAM_ID }}
+          workspace-path: ios/${{ inputs.APP_NAME }}.xcworkspace
+          output-path: '${{ inputs.APP_NAME }}.ipa'
+
+      - name: Upload build
+        uses: actions/upload-artifact@v3
+        with:
+          name: '${{ inputs.APP_NAME }}.ipa'
+          path: '${{ inputs.APP_NAME }}.ipa'
