@@ -5,8 +5,9 @@ on:
     inputs:
       environment:
         description: release or debug
-        required: true
+        required: false
         type: string # values: release or debug
+        default: release
       publish:
         required: false
         type: boolean
@@ -45,7 +46,7 @@ jobs:
         run: yarn ci
 
       - name: Make release keystore
-        run: base64 --decode <<< ${{ secrets.RELEASE_KEYSTORE_BASE64 }} > ./android/app/my-upload-key.keystore
+        run: echo ${{ secrets.RELEASE_KEYSTORE_BASE64 }} | base64 --decode > ./android/app/my-upload-key.keystore
 
       - name: Cache Gradle Wrapper
         uses: actions/cache@v2
