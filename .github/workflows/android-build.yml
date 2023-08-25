@@ -20,11 +20,14 @@ on:
         required: false
         type: boolean
         description: Publish to Appcenter
-    # secrets:
-    #   NPM_TOKEN:
-    #     required: true
+    secrets:
+      RELEASE_KEYSTORE_BASE64:
+        required: true
     #   APP_CENTER_TOKEN_ANDROID:
     #     required: true
+
+env:
+  CAPITAL_ENVIRONMENT: ${{inputs.environment == 'release' && 'Release' || 'Debug'}}
 
 jobs:
   build-android:
@@ -40,6 +43,10 @@ jobs:
 
       - name: Install Node modules
         run: yarn ci
+
+      - name: Make release keystore
+        run: |
+          base64 -d <<< ${{ secrets.RELEASE_KEYSTORE_BASE64 }} > android/app/my-upload-key.keystore
 
       - name: Cache Gradle Wrapper
         uses: actions/cache@v2
@@ -58,9 +65,9 @@ jobs:
         run: cd android && chmod +x ./gradlew
 
       # Build Command
-      - name: Build Android ${{inputs.environment == 'release' && 'Release' || 'Debug'}}
+      - name: Build Android $CAPITAL_ENVIRONMENT
         run: |
-          cd android && ./gradlew bundle${{inputs.environment == 'release' && 'Release' || 'Debug'}} --no-daemon
+          cd android && ./gradlew bundle$CAPITAL_ENVIRONMENT --no-daemon
       # Upload to Artifact
       - name: Upload Artifact
         if: ${{ inputs.environment == 'release' }}
@@ -68,3 +75,15 @@ jobs:
         with:
           name: ExampleApp.aab
           path: 'android/app/build/outputs/bundle/release/app-release.aab'
+
+      - name: Upload to Google Play Internal Testing
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT_JSON }}
+          packageName: com.typescriptteatimerncicd
+          releaseFiles: android/app/build/outputs/bundle/release/app-release.aab
+          track: internal
+          status: completed
+          releaseName: v1.0.2
+          inAppUpdatePriority: 2
+          userFraction: 1.0
