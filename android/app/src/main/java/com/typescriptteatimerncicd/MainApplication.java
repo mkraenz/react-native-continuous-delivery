@@ -1,4 +1,4 @@
-package com.rncicd;
+package com.typescriptteatimerncicd;
 
 import android.app.Application;
 import com.facebook.react.PackageList;

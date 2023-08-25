@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "rncicd.app"
-               BlueprintName = "rncicd"
-               ReferencedContainer = "container:rncicd.xcodeproj">
+               BuildableName = "typescriptteatimerncicd.app"
+               BlueprintName = "typescriptteatimerncicd"
+               ReferencedContainer = "container:typescriptteatimerncicd.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "rncicdTests.xctest"
-               BlueprintName = "rncicdTests"
-               ReferencedContainer = "container:rncicd.xcodeproj">
+               BuildableName = "typescriptteatimerncicdTests.xctest"
+               BlueprintName = "typescriptteatimerncicdTests"
+               ReferencedContainer = "container:typescriptteatimerncicd.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "rncicd.app"
-            BlueprintName = "rncicd"
-            ReferencedContainer = "container:rncicd.xcodeproj">
+            BuildableName = "typescriptteatimerncicd.app"
+            BlueprintName = "typescriptteatimerncicd"
+            ReferencedContainer = "container:typescriptteatimerncicd.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "rncicd.app"
-            BlueprintName = "rncicd"
-            ReferencedContainer = "container:rncicd.xcodeproj">
+            BuildableName = "typescriptteatimerncicd.app"
+            BlueprintName = "typescriptteatimerncicd"
+            ReferencedContainer = "container:typescriptteatimerncicd.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

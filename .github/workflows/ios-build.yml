@@ -25,7 +25,7 @@ on:
       #   required: true
 
 env:
-  APP_NAME: rncicd
+  APP_NAME: typescriptteatimerncicd
 
 jobs:
   build-ios:
