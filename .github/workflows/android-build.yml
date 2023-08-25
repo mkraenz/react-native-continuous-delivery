@@ -67,7 +67,7 @@ jobs:
         run: cd android && chmod +x ./gradlew
 
       # Build Command
-      - name: Build Android ${{ CAPITAL_ENVIRONMENT }}
+      - name: Build Android  ${{inputs.environment == 'release' && 'Release' || 'Debug'}}
         run: |
           cd android && ./gradlew bundle$CAPITAL_ENVIRONMENT --no-daemon
       # Upload to Artifact
