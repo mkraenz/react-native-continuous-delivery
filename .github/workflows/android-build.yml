@@ -45,8 +45,7 @@ jobs:
         run: yarn ci
 
       - name: Make release keystore
-        run: |
-          base64 -d <<< ${{ secrets.RELEASE_KEYSTORE_BASE64 }} > android/app/my-upload-key.keystore
+        run: base64 --decode <<< ${{ secrets.RELEASE_KEYSTORE_BASE64 }} > ./android/app/my-upload-key.keystore
 
       - name: Cache Gradle Wrapper
         uses: actions/cache@v2
