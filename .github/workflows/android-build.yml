@@ -88,4 +88,3 @@ jobs:
           status: completed
           releaseName: v1.0.2
           inAppUpdatePriority: 2
-          userFraction: 1.0
